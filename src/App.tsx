@@ -52,7 +52,7 @@ const App = () => (
           <DataSourceProvider>
             <Toaster />
             <Sonner />
-            <BrowserRouter basename="/WINTER-2026">
+            <BrowserRouter basename="/TopoForge---Real-time-Anomaly-Detection-Platform-using-Topological-Data-Analysis-TDA-/">
               <CommandPalette />
               <Suspense fallback={<PageLoader />}>
                 <Routes>

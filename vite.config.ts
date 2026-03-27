@@ -4,7 +4,7 @@ import path from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  base: "/WINTER-2026/",
+  base: "/TopoForge---Real-time-Anomaly-Detection-Platform-using-Topological-Data-Analysis-TDA-/",
   server: {
     host: "::",
     port: 8080,
