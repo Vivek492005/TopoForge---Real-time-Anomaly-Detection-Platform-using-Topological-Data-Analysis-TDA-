@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { HashRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { WikipediaDataProvider } from "@/context/WikipediaDataContext";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { CommandPalette } from "@/components/ui/CommandPalette";
@@ -52,7 +52,7 @@ const App = () => (
           <DataSourceProvider>
             <Toaster />
             <Sonner />
-            <BrowserRouter basename="/TopoForge---Real-time-Anomaly-Detection-Platform-using-Topological-Data-Analysis-TDA-/">
+            <Router>
               <CommandPalette />
               <Suspense fallback={<PageLoader />}>
                 <Routes>
@@ -138,7 +138,7 @@ const App = () => (
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </Suspense>
-            </BrowserRouter>
+              </Router>
           </DataSourceProvider>
         </WikipediaDataProvider>
       </UIProvider>
