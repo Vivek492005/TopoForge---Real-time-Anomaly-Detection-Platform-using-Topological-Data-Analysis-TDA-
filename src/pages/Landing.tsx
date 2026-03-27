@@ -94,14 +94,14 @@ const Landing = () => {
               className="absolute w-2 h-2 bg-primary/30 rounded-full blur-sm"
               animate={{
                 x: [
-                  Math.random() * window.innerWidth,
-                  Math.random() * window.innerWidth,
-                  Math.random() * window.innerWidth,
+                  `${Math.random() * 100}vw`,
+                  `${Math.random() * 100}vw`,
+                  `${Math.random() * 100}vw`,
                 ],
                 y: [
-                  Math.random() * window.innerHeight,
-                  Math.random() * window.innerHeight,
-                  Math.random() * window.innerHeight,
+                  `${Math.random() * 100}vh`,
+                  `${Math.random() * 100}vh`,
+                  `${Math.random() * 100}vh`,
                 ],
                 scale: [1, 1.5, 1],
                 opacity: [0.3, 0.6, 0.3],

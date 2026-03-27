@@ -16,6 +16,23 @@
 
   <body class="dark">
     <div id="root"></div>
+    <script>
+      window.onerror = function(message, source, lineno, colno, error) {
+        document.body.innerHTML += '<div style="color: red; padding: 20px; font-family: monospace; background: #fff; z-index: 9999; position: relative;">' + 
+          '<h3>Global Error</h3>' +
+          '<p><strong>Message:</strong> ' + message + '</p>' +
+          '<p><strong>Source:</strong> ' + source + ':' + lineno + ':' + colno + '</p>' +
+          '<p><strong>Error:</strong> ' + (error ? error.stack : 'N/A') + '</p>' +
+          '</div>';
+      };
+      // Catch unhandled promise rejections
+      window.addEventListener('unhandledrejection', function(event) {
+        document.body.innerHTML += '<div style="color: darkred; padding: 20px; font-family: monospace; background: #fff; z-index: 9999; position: relative;">' + 
+          '<h3>Unhandled Promise Rejection</h3>' +
+          '<p><strong>Reason:</strong> ' + (event.reason ? event.reason.stack || event.reason : 'Unknown') + '</p>' +
+          '</div>';
+      });
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

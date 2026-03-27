@@ -29,40 +29,55 @@ export function useTopoForge(url: string = 'ws://localhost:8000/ws/stream') {
     const [isConnected, setIsConnected] = useState(false);
     const [lastAnalysis, setLastAnalysis] = useState<AnalysisResult | null>(null);
 
+    // Only connect to backend WebSocket when running on localhost (not on GitHub Pages)
+    const isLocalDev = typeof window !== 'undefined' && window.location.hostname === 'localhost';
+
     const connect = useCallback(() => {
+        if (!isLocalDev) return; // Skip WebSocket on production/GitHub Pages
         if (ws.current?.readyState === WebSocket.OPEN || ws.current?.readyState === WebSocket.CONNECTING) return;
 
-        ws.current = new WebSocket(url);
+        try {
+            ws.current = new WebSocket(url);
 
-        ws.current.onopen = () => {
-            console.log('[TopoForge] Connected to AI Core');
-            setIsConnected(true);
-        };
+            ws.current.onopen = () => {
+                console.log('[TopoForge] Connected to AI Core');
+                setIsConnected(true);
+            };
 
-        ws.current.onclose = () => {
-            console.log('[TopoForge] Disconnected from AI Core');
-            setIsConnected(false);
-            // Auto-reconnect after 3s if component is still mounted
-            setTimeout(() => {
-                if (ws.current?.readyState === WebSocket.CLOSED) {
-                    connect();
+            ws.current.onerror = () => {
+                // Silently ignore - backend not running
+                setIsConnected(false);
+            };
+
+            ws.current.onclose = () => {
+                setIsConnected(false);
+                // Auto-reconnect after 5s only on localhost
+                if (isLocalDev) {
+                    setTimeout(() => {
+                        if (ws.current?.readyState === WebSocket.CLOSED) {
+                            connect();
+                        }
+                    }, 5000);
                 }
-            }, 3000);
-        };
+            };
 
-        ws.current.onmessage = (event) => {
-            try {
-                const response: TopoForgeResponse = JSON.parse(event.data);
-                if (response.type === 'analysis') {
-                    setLastAnalysis(response.data);
+            ws.current.onmessage = (event) => {
+                try {
+                    const response: TopoForgeResponse = JSON.parse(event.data);
+                    if (response.type === 'analysis') {
+                        setLastAnalysis(response.data);
+                    }
+                } catch (e) {
+                    // Silently ignore parse errors
                 }
-            } catch (e) {
-                console.error('[TopoForge] Failed to parse message', e);
-            }
-        };
-    }, [url]);
+            };
+        } catch (e) {
+            // Silently ignore connection errors
+        }
+    }, [url, isLocalDev]);
 
     useEffect(() => {
+        if (!isLocalDev) return; // Don't attempt connection on production
         connect();
         return () => {
             if (ws.current) {
@@ -70,7 +85,7 @@ export function useTopoForge(url: string = 'ws://localhost:8000/ws/stream') {
                 ws.current.close();
             }
         };
-    }, [connect]);
+    }, [connect, isLocalDev]);
 
     const sendEvent = useCallback((event: any) => {
         if (ws.current?.readyState === WebSocket.OPEN) {
