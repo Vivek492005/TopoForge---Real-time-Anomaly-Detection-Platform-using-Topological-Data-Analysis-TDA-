@@ -25,7 +25,14 @@ import { useMemo, useState, useEffect } from "react";
 import { generateKasperskyThreat, generateBitdefenderThreat, generateAnyRunSandbox, ThreatEvent } from "@/lib/dataSources";
 
 import { useDataSource } from "@/context/DataSourceContext";
-import { STATIC_SOURCES_DATA } from "@/lib/sourcesData";
+const DataSourcesNames: Record<string, string> = {
+  kaspersky: 'Kaspersky Threat Intelligence',
+  bitdefender: 'Bitdefender Threat Intel',
+  anyrun: 'ANY.RUN Sandbox',
+  crypto: 'Cryptocurrency Feed',
+  github: 'GitHub Events Feed',
+  reddit: 'Reddit Trending Feed',
+};
 
 const Analytics = () => {
   const {
@@ -380,10 +387,10 @@ const Analytics = () => {
                     </Badge>
                   </div>
                   {Array.from(activeSourceIds).slice(0, 4).map(id => {
-                    const source = STATIC_SOURCES_DATA.find(s => s.id === id);
+                    const sourceName = DataSourcesNames[id] || id;
                     return (
                       <div key={id} className="flex justify-between">
-                        <span className="text-muted-foreground truncate max-w-[120px]">{source?.name || id}</span>
+                        <span className="text-muted-foreground truncate max-w-[120px]">{sourceName}</span>
                         <Badge variant="success">Live</Badge>
                       </div>
                     );
