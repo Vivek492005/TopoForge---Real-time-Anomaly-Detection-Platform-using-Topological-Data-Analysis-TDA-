@@ -6,13 +6,13 @@
   "type": "module",
   "author": "Vidish Bijalwan",
   "license": "MIT",
-  "homepage": "https://Vivek492005.github.io/TopoShaoe-Real-Time-Anomaly-Detection-Platform/",
+  "homepage": "https://Vivek492005.github.io/TopoForge---Real-time-Anomaly-Detection-Platform-using-Topological-Data-Analysis-TDA-/",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Vivek492005/TopoShaoe-Real-Time-Anomaly-Detection-Platform.git"
+    "url": "git+https://github.com/Vivek492005/TopoForge---Real-time-Anomaly-Detection-Platform-using-Topological-Data-Analysis-TDA-.git"
   },
   "bugs": {
-    "url": "https://github.com/Vivek492005/TopoShaoe-Real-Time-Anomaly-Detection-Platform/issues"
+    "url": "https://github.com/Vivek492005/TopoForge---Real-time-Anomaly-Detection-Platform-using-Topological-Data-Analysis-TDA-/issues"
   },
   "keywords": [
     "react",
